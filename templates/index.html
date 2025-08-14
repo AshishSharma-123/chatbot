@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gemini AI Chatbot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app__header">
+      <div class="brand">
+        <div class="logo">🤖</div>
+        <div class="meta">
+          <h1>Gemini Chatbot</h1>
+          <p class="sub">Text + Voice (local)</p>
+        </div>
+      </div>
+      <div class="toggles">
+        <label class="toggle">
+          <input id="ttsToggle" type="checkbox" checked />
+          <span>Speak replies</span>
+        </label>
+      </div>
+    </header>
+
+    <main id="chat" class="chat"></main>
+
+    <form id="chatForm" class="composer" autocomplete="off">
+      <button id="micBtn" type="button" class="btn icon" title="Speak (Web Speech API)">🎙️</button>
+      <input id="message" name="message" class="input" placeholder="Type a message…" />
+      <button class="btn primary" type="submit">Send</button>
+    </form>
+
+    <footer class="footer">
+      <span>Tip:</span> Use the mic for voice input. Replies can be spoken aloud if enabled.
+    </footer>
+  </div>
+
+  <template id="msgTemplate">
+    <div class="msg">
+      <div class="avatar"></div>
+      <div class="bubble"></div>
+    </div>
+  </template>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
