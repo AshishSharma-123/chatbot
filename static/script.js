@@ -5,6 +5,9 @@ const micBtn = document.getElementById('micBtn');
 const ttsToggle = document.getElementById('ttsToggle');
 const tpl = document.getElementById('msgTemplate');
 
+// Your Render backend URL
+const BACKEND_URL = "https://chatbot-n3q4.onrender.com/chat";
+
 let recognizing = false;
 let recognition = null;
 
@@ -21,7 +24,6 @@ function speak(text) {
   if (!ttsToggle.checked) return;
   if (!('speechSynthesis' in window)) return;
   const utter = new SpeechSynthesisUtterance(text);
-  // Let the browser choose a default voice; keep it simple/cross-platform
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utter);
 }
@@ -30,7 +32,6 @@ async function sendMessage(text) {
   addMessage('user', text);
   input.value = '';
 
-  // show a lightweight typing indicator
   const indicator = document.createElement('div');
   indicator.className = 'msg bot';
   indicator.innerHTML = '<div class="avatar"></div><div class="bubble">Thinking…</div>';
@@ -38,7 +39,7 @@ async function sendMessage(text) {
   chatEl.scrollTop = chatEl.scrollHeight;
 
   try {
-    const res = await fetch('/chat', {
+    const res = await fetch(BACKEND_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: text })
@@ -61,7 +62,6 @@ form.addEventListener('submit', (e) => {
   sendMessage(text);
 });
 
-// Voice input using Web Speech API (client-side STT)
 if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SR();
@@ -100,7 +100,6 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
     }
   });
 } else {
-  // Fallback: disable mic if API not supported
   micBtn.disabled = true;
   micBtn.title = 'Voice input not supported in this browser';
 }
